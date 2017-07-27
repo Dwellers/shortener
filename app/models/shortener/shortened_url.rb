@@ -142,7 +142,7 @@ class Shortener::ShortenedUrl < ActiveRecord::Base
     count = 0
     begin
       transaction(requires_new: true) do
-        self.unique_key = custom_key || generate_unique_key
+        self.unique_key = count == 0 && custom_key || generate_unique_key
         super()
       end
     rescue ActiveRecord::RecordNotUnique, ActiveRecord::StatementInvalid => err
